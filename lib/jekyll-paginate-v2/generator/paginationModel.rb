@@ -268,8 +268,8 @@ module Jekyll
         newpages = []
 
         # Consider the default index page name and extension
-        indexPageName = config['indexpage'].nil? ? '' : config['indexpage'].split('.')[0]
-        indexPageExt =  config['extension'].nil? ? '' : Utils.ensure_leading_dot(config['extension'])
+        indexPageName = config['indexpage'].nil? ? 'index' : config['indexpage'].split('.')[0]
+        indexPageExt =  config['extension'].nil? ? '.html' : Utils.ensure_leading_dot(config['extension'])
         indexPageWithExt = indexPageName + indexPageExt
 
         # In case there are no (visible) posts, generate the index file anyway
@@ -307,6 +307,8 @@ module Jekyll
             # Support for extensionless permalinks
             newpage.set_url(newpage.pager.page_path+indexPageExt)
           end
+
+          newpage.dir = File.dirname(newpage.pager.page_path)
 
           if( template.data['permalink'] )
             newpage.data['permalink'] = newpage.pager.page_path
